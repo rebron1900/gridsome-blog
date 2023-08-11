@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+  <head>
+    <title>只是玩玩 | JUST FUN - 只是玩玩 | JUST FUN</title><meta name="gridsome:hash" content="03d4e26bc6a7202eb1f57b68d71e0c4979a9960b"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.23"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="/gridsome-blog"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.9bb7ffafafc09ac851d81afb65b8ef59.png"><link rel="preload" href="/assets/css/0.styles.be694e5c.css" as="style"><link rel="preload" href="/assets/js/app.86bb94d9.js" as="script"><link rel="preload" href="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" as="script"><link rel="prefetch" href="/assets/js/6.4b802b1d.js"><link rel="prefetch" href="/assets/js/page--node-modules--gridsome--app--pages--404-vue.5fb9a6b8.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-copy-vue.caed7301.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-vue.a2bb3d29.js"><link rel="stylesheet" href="/assets/css/0.styles.be694e5c.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+  </head>
+  <body  class="darkmode">
+    <main role="main" data-server-rendered="true" id="app" class="container"><div class="row"><header class="header"><a href="/" class="active"><h1>👨‍💻 只是玩玩 | JUST FUN</h1></a><!----></header><div class="article"><h1 class="article-title">[开发日志]1：分析需求和原型设计</h1><p class="article-date"> 21 April 2017 · <i> min read</i></p><article><!--kg-card-begin: markdown--><h3 id>一、行业情况</h3>
+<p>行业情况：目前所有的零售行业都存在厂家会给销售进行返利的情况，那么返利通过什么来确定呢？最有力的当然是销售小票了！目前就我了解的情况来说基本上都是使用微信或者QQ拍照发到群内然后由返利人员审核后发放红包。</p>
+<p>但是，这个存在一个问题，就是使用如果参与返利的人员过多的话会存在漏发或者发错的情况。并且如果要统计销售数据的话必须还要另外用表格或者手写的方式统计登记，无形之中增加了办公成本。</p>
+<hr>
+### 二、需求分析
+分析了一下业务逻辑，这个里面主要有2个角色：
+<ol>
+<li>**营业员：**要做的事情就是销售指定的品种之后拍照并发送到微信群</li>
+<li>**管理员：**查看各个人员的销售单据，并核算返利金额。如果单据无误就发放红包。单据有误或者有特殊情况便需要在群里告知相关人员。</li>
+</ol>
+<p>所以实际的软件具备的功能因具备以下功能</p>
+<ol>
+<li>**登录系统：**有角色区分。登陆后显示不同的操作页面。</li>
+</ol>
+<p><strong>营业员登陆后的业务流程：</strong></p>
+<ol>
+<li>系统列出所有可以参与返利的品种，</li>
+<li>营业员选择需要晒单的品种，并设置对应的销售数量。</li>
+<li>跳转至信息统计页面，这个页面显示了已选择的晒单品种、数量、单项统计金额、合计金额。并且可以上传销售单据。选择完后点提交即可。</li>
+<li>有一个历史晒单界面可以显示目前所有晒过的单据，并且显示所有已通过审核获得返利的总金额，点击可查看单据详情。</li>
+<li>单据详情页面显示晒单品种、数量、单项统计金额、合计金额、管理员审核信息。</li>
+</ol>
+<p><strong>管理员登陆后的业务流程：</strong></p>
+<ol>
+<li>系统列出所有人员晒出来的单据情况，点击后如果是待审核单据跳转至单据审核页面，已审核或者未通过单据跳转至单据详情页面。</li>
+<li>单据审核页面会显示单据的晒单品种、数量、单项统计金额、合计金额，可填入审核信息，可选择拒绝或者通过。</li>
+<li>单据的查询页面，可根据条件查询指定单据，目前设想的条件为：开始时间、结束时间、晒单人，点击查询后显示对应的数据，查询出来的数据点击后进入对应的单据详情页面。</li>
+</ol>
+<hr>
+### 三、APP原型设计
+本来打算用CDR来画的，后来百度了一下发现原型设计可以通过现成的软件来快速制作，然后发现了一个还蛮方便简单的在线设计APP：[**墨刀**](https://modao.cc/)（本来以为是个本地软件，后来才发现也可以在线编辑，另外注意：他们的本地软件用的时候如果拖动大量控件的话容易有很长时间卡顿，在线版还没有测试），使用起来简单好用，界面也很漂亮，最关键的是可以免费使用到处功能，而且可以打包成APK或者IOS软件，而且还可以在线预览！超方便的！像这样↓
+<p>因为是专门的原型设计工具，大概花了半个小时做如下的软件原型。(PS：刚刚在做这张图片的时候发现似乎有三张很重要的页面没有做：晒单品种的增删改查)</p>
+<iframe src="https://modao.cc/app/aE7DaIsyTnsycQZtFdSe1IxP8G30vn0/embed" width="478" height="884" allowtransparency="true" frameborder="0"></iframe>
+<audio class="wp-audio-shortcode" id="artbgm" loop="1" preload="auto" style="width: 100%;" controls="controls" src="https://cdn.1900.live/California%20Dreaming%20%28%E9%87%8D%E5%BA%86%E6%A3%AE%E6%9E%97%29.mp3"></audio>
+<h3 id>四、框架选择</h3>
+<p>说道这里，我想起我七年前写代码的时候。那时候啥也不懂，一个刚毕业的小白，只懂学校里教的一些固化的东西，所有的功能都是自己造轮子一个个写出来的。</p>
+<p>看看现在的开发环境，各种框架、ide，各种方便的快速开发，我就不由得感叹，真是变化得太快了，新技术层出不穷好像永远不会停止似得。不过也庆幸自己以前有一些基础，即便六七年后再来写代码也不会觉得太难受，虽然以前学的技术可能用不上了，但是思维还在，万变不离其宗。</p>
+<p><strong>前端框架：framework7，模版引擎：artTemplate</strong></p>
+<p>Framework7项目地址：<a href="https://github.com/nolimits4web/Framework7?ref=1900.live">github</a> | <a href="http://www.framework7.cn/?ref=1900.live">中文站</a> | <a href="http://docs.framework7.cn/?ref=1900.live">中文文档</a></p>
+<p>artTemplate项目地址：<a href="https://github.com/aui/art-template?ref=1900.live">github</a>(没有官方网站，github上有详细介绍)</p>
+<h4 id="framework7">framework7</h4>
+<p>为什么用f7？只是因为知乎上有一个人说它有几乎完美的使用体验，而且国内淘宝在负责维护。使用过后感觉还可以，但是虽然是淘宝在维护，但是中文资料偏少、而且学习环境真的是很差(这一点请看这篇文章：<a href="https://1900.live/tu-cao/">吐槽</a>。基本上属于摸着石头过河，各位在选择学习某个框架的时候虽然框架的优点很重要，但是也要考虑下学习环境。</p>
+<p>总得来说框架的效果还是不错的，打包后在手机上使用也没有什么大问题。但是有人说低端手机如果直接使用会有卡顿的情况，需要搭配crosswalk才行。我也不太懂，到时候遇到了再说把。</p>
+<p>具体的示例代码我就不写了，f7的初始化代码比较多而且有些复杂。</p>
+<h4 id="arttemplate">artTemplate</h4>
+<p>模版引擎我不是太了解，但是在使用ghost的时候用到过一种：<a href="http://handlebarsjs.com/?ref=1900.live">Handlebars.js</a>，本来打算使用这个，但是考虑到中文资料偏少所以还是选择了国人写的artTemplate，口碑也非常不错。而且兼容多种模版语法，甚至可以自定义模版语法。使用起来也相对简单例如，连我这种从来没学习过的人看了几分钟后就能使用了，以下是我个人理解的示例：</p>
+<pre><code>//在头部引入js文件
+&lt;script src=&quot;../../lib/template-web.js&quot;&gt;&lt;/script&gt;
+...
+//模板化后的html填充的容器
+&lt;div id=&quot;content&quot;&gt;&lt;/div&gt;
+//定义模版区域
+&lt;script id=&quot;test&quot; type=&quot;text/html&quot;&gt;
+&lt;ul&gt;
+//开始循环填入数据，这里list为要循环的json对象，后面的value则为循环中读取出来的值，i则是索引。
+//另外，传入进来的json对象名默认为$data
+    {{each list value i}}
+        &lt;li&gt;索引 {{i + 1}} ：{{value}}&lt;/li&gt;
+    {{/each}}
+&lt;/ul&gt;
+&lt;/script&gt;
+
+&lt;script&gt;
+var data = {
+	title: '基本例子',
+	isAdmin: true,
+	list: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']
+};
+//生成模版化后的html
+var html = template('test', data);
+document.getElementById('content').innerHTML = html;
+&lt;/script&gt;
+</code></pre>
+<!--kg-card-end: markdown--></article></div><div class="footer"><div><p>
+          Built with
+          <a target="_blank" href="//gridsome.org" class="link">Gridsome</a>
+          &amp; Made with ❤️ by
+          <a target="_blank" href="//alex.design" class="link">Alex Brown</a></p></div><div class="footer-links"><a target="_blank" href="/sitemap.xml">Sitemap</a><a target="_blank" href="/feed.xml">RSS Feed</a></div></div></div></main>
+    <script>window.__INITIAL_STATE__={"data":{"metadata":{"siteName":"只是玩玩 | JUST FUN","siteDescription":"\u002Fgridsome-blog"},"post":{"id":"63158312cf533d1c2cf29989","title":"[开发日志]1：分析需求和原型设计","content":"\u003C!--kg-card-begin: markdown--\u003E\u003Ch3 id\u003E一、行业情况\u003C\u002Fh3\u003E\n\u003Cp\u003E行业情况：目前所有的零售行业都存在厂家会给销售进行返利的情况，那么返利通过什么来确定呢？最有力的当然是销售小票了！目前就我了解的情况来说基本上都是使用微信或者QQ拍照发到群内然后由返利人员审核后发放红包。\u003C\u002Fp\u003E\n\u003Cp\u003E但是，这个存在一个问题，就是使用如果参与返利的人员过多的话会存在漏发或者发错的情况。并且如果要统计销售数据的话必须还要另外用表格或者手写的方式统计登记，无形之中增加了办公成本。\u003C\u002Fp\u003E\n\u003Chr\u003E\n### 二、需求分析\n分析了一下业务逻辑，这个里面主要有2个角色：\n\u003Col\u003E\n\u003Cli\u003E**营业员：**要做的事情就是销售指定的品种之后拍照并发送到微信群\u003C\u002Fli\u003E\n\u003Cli\u003E**管理员：**查看各个人员的销售单据，并核算返利金额。如果单据无误就发放红包。单据有误或者有特殊情况便需要在群里告知相关人员。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E所以实际的软件具备的功能因具备以下功能\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003E**登录系统：**有角色区分。登陆后显示不同的操作页面。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E\u003Cstrong\u003E营业员登陆后的业务流程：\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003E系统列出所有可以参与返利的品种，\u003C\u002Fli\u003E\n\u003Cli\u003E营业员选择需要晒单的品种，并设置对应的销售数量。\u003C\u002Fli\u003E\n\u003Cli\u003E跳转至信息统计页面，这个页面显示了已选择的晒单品种、数量、单项统计金额、合计金额。并且可以上传销售单据。选择完后点提交即可。\u003C\u002Fli\u003E\n\u003Cli\u003E有一个历史晒单界面可以显示目前所有晒过的单据，并且显示所有已通过审核获得返利的总金额，点击可查看单据详情。\u003C\u002Fli\u003E\n\u003Cli\u003E单据详情页面显示晒单品种、数量、单项统计金额、合计金额、管理员审核信息。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E\u003Cstrong\u003E管理员登陆后的业务流程：\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003E系统列出所有人员晒出来的单据情况，点击后如果是待审核单据跳转至单据审核页面，已审核或者未通过单据跳转至单据详情页面。\u003C\u002Fli\u003E\n\u003Cli\u003E单据审核页面会显示单据的晒单品种、数量、单项统计金额、合计金额，可填入审核信息，可选择拒绝或者通过。\u003C\u002Fli\u003E\n\u003Cli\u003E单据的查询页面，可根据条件查询指定单据，目前设想的条件为：开始时间、结束时间、晒单人，点击查询后显示对应的数据，查询出来的数据点击后进入对应的单据详情页面。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Chr\u003E\n### 三、APP原型设计\n本来打算用CDR来画的，后来百度了一下发现原型设计可以通过现成的软件来快速制作，然后发现了一个还蛮方便简单的在线设计APP：[**墨刀**](https:\u002F\u002Fmodao.cc\u002F)（本来以为是个本地软件，后来才发现也可以在线编辑，另外注意：他们的本地软件用的时候如果拖动大量控件的话容易有很长时间卡顿，在线版还没有测试），使用起来简单好用，界面也很漂亮，最关键的是可以免费使用到处功能，而且可以打包成APK或者IOS软件，而且还可以在线预览！超方便的！像这样↓\n\u003Cp\u003E因为是专门的原型设计工具，大概花了半个小时做如下的软件原型。(PS：刚刚在做这张图片的时候发现似乎有三张很重要的页面没有做：晒单品种的增删改查)\u003C\u002Fp\u003E\n\u003Ciframe src=\"https:\u002F\u002Fmodao.cc\u002Fapp\u002FaE7DaIsyTnsycQZtFdSe1IxP8G30vn0\u002Fembed\" width=\"478\" height=\"884\" allowtransparency=\"true\" frameborder=\"0\"\u003E\u003C\u002Fiframe\u003E\n\u003Caudio class=\"wp-audio-shortcode\" id=\"artbgm\" loop=\"1\" preload=\"auto\" style=\"width: 100%;\" controls=\"controls\" src=\"https:\u002F\u002Fcdn.1900.live\u002FCalifornia%20Dreaming%20%28%E9%87%8D%E5%BA%86%E6%A3%AE%E6%9E%97%29.mp3\"\u003E\u003C\u002Faudio\u003E\n\u003Ch3 id\u003E四、框架选择\u003C\u002Fh3\u003E\n\u003Cp\u003E说道这里，我想起我七年前写代码的时候。那时候啥也不懂，一个刚毕业的小白，只懂学校里教的一些固化的东西，所有的功能都是自己造轮子一个个写出来的。\u003C\u002Fp\u003E\n\u003Cp\u003E看看现在的开发环境，各种框架、ide，各种方便的快速开发，我就不由得感叹，真是变化得太快了，新技术层出不穷好像永远不会停止似得。不过也庆幸自己以前有一些基础，即便六七年后再来写代码也不会觉得太难受，虽然以前学的技术可能用不上了，但是思维还在，万变不离其宗。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cstrong\u003E前端框架：framework7，模版引擎：artTemplate\u003C\u002Fstrong\u003E\u003C\u002Fp\u003E\n\u003Cp\u003EFramework7项目地址：\u003Ca href=\"https:\u002F\u002Fgithub.com\u002Fnolimits4web\u002FFramework7?ref=1900.live\"\u003Egithub\u003C\u002Fa\u003E | \u003Ca href=\"http:\u002F\u002Fwww.framework7.cn\u002F?ref=1900.live\"\u003E中文站\u003C\u002Fa\u003E | \u003Ca href=\"http:\u002F\u002Fdocs.framework7.cn\u002F?ref=1900.live\"\u003E中文文档\u003C\u002Fa\u003E\u003C\u002Fp\u003E\n\u003Cp\u003EartTemplate项目地址：\u003Ca href=\"https:\u002F\u002Fgithub.com\u002Faui\u002Fart-template?ref=1900.live\"\u003Egithub\u003C\u002Fa\u003E(没有官方网站，github上有详细介绍)\u003C\u002Fp\u003E\n\u003Ch4 id=\"framework7\"\u003Eframework7\u003C\u002Fh4\u003E\n\u003Cp\u003E为什么用f7？只是因为知乎上有一个人说它有几乎完美的使用体验，而且国内淘宝在负责维护。使用过后感觉还可以，但是虽然是淘宝在维护，但是中文资料偏少、而且学习环境真的是很差(这一点请看这篇文章：\u003Ca href=\"https:\u002F\u002F1900.live\u002Ftu-cao\u002F\"\u003E吐槽\u003C\u002Fa\u003E。基本上属于摸着石头过河，各位在选择学习某个框架的时候虽然框架的优点很重要，但是也要考虑下学习环境。\u003C\u002Fp\u003E\n\u003Cp\u003E总得来说框架的效果还是不错的，打包后在手机上使用也没有什么大问题。但是有人说低端手机如果直接使用会有卡顿的情况，需要搭配crosswalk才行。我也不太懂，到时候遇到了再说把。\u003C\u002Fp\u003E\n\u003Cp\u003E具体的示例代码我就不写了，f7的初始化代码比较多而且有些复杂。\u003C\u002Fp\u003E\n\u003Ch4 id=\"arttemplate\"\u003EartTemplate\u003C\u002Fh4\u003E\n\u003Cp\u003E模版引擎我不是太了解，但是在使用ghost的时候用到过一种：\u003Ca href=\"http:\u002F\u002Fhandlebarsjs.com\u002F?ref=1900.live\"\u003EHandlebars.js\u003C\u002Fa\u003E，本来打算使用这个，但是考虑到中文资料偏少所以还是选择了国人写的artTemplate，口碑也非常不错。而且兼容多种模版语法，甚至可以自定义模版语法。使用起来也相对简单例如，连我这种从来没学习过的人看了几分钟后就能使用了，以下是我个人理解的示例：\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003E\u002F\u002F在头部引入js文件\n&lt;script src=&quot;..\u002F..\u002Flib\u002Ftemplate-web.js&quot;&gt;&lt;\u002Fscript&gt;\n...\n\u002F\u002F模板化后的html填充的容器\n&lt;div id=&quot;content&quot;&gt;&lt;\u002Fdiv&gt;\n\u002F\u002F定义模版区域\n&lt;script id=&quot;test&quot; type=&quot;text\u002Fhtml&quot;&gt;\n&lt;ul&gt;\n\u002F\u002F开始循环填入数据，这里list为要循环的json对象，后面的value则为循环中读取出来的值，i则是索引。\n\u002F\u002F另外，传入进来的json对象名默认为$data\n    {{each list value i}}\n        &lt;li&gt;索引 {{i + 1}} ：{{value}}&lt;\u002Fli&gt;\n    {{\u002Feach}}\n&lt;\u002Ful&gt;\n&lt;\u002Fscript&gt;\n\n&lt;script&gt;\nvar data = {\n\ttitle: '基本例子',\n\tisAdmin: true,\n\tlist: ['文艺', '博客', '摄影', '电影', '民谣', '旅行', '吉他']\n};\n\u002F\u002F生成模版化后的html\nvar html = template('test', data);\ndocument.getElementById('content').innerHTML = html;\n&lt;\u002Fscript&gt;\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003C!--kg-card-end: markdown--\u003E","date":"21 April 2017","path":"1-prototype-desgin"}},"context":{}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script><script src="/assets/js/app.86bb94d9.js" defer></script><script src="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" defer></script>
+  </body>
+</html>

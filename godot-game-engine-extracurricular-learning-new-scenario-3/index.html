@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+  <head>
+    <title>只是玩玩 | JUST FUN - 只是玩玩 | JUST FUN</title><meta name="gridsome:hash" content="03d4e26bc6a7202eb1f57b68d71e0c4979a9960b"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.23"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="/gridsome-blog"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.9bb7ffafafc09ac851d81afb65b8ef59.png"><link rel="preload" href="/assets/css/0.styles.be694e5c.css" as="style"><link rel="preload" href="/assets/js/app.86bb94d9.js" as="script"><link rel="preload" href="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" as="script"><link rel="prefetch" href="/assets/js/6.4b802b1d.js"><link rel="prefetch" href="/assets/js/page--node-modules--gridsome--app--pages--404-vue.5fb9a6b8.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-copy-vue.caed7301.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-vue.a2bb3d29.js"><link rel="stylesheet" href="/assets/css/0.styles.be694e5c.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+  </head>
+  <body  class="darkmode">
+    <main role="main" data-server-rendered="true" id="app" class="container"><div class="row"><header class="header"><a href="/" class="active"><h1>👨‍💻 只是玩玩 | JUST FUN</h1></a><!----></header><div class="article"><h1 class="article-title">Godot游戏引擎学习 课外学习：新场景 3</h1><p class="article-date"> 30 December 2020 · <i> min read</i></p><article><!--kg-card-begin: markdown--><p>今天继续完成之前指定的任务，基本上算是全部完成了</p>
+<p><img src="https://cdn.1900.live/typora/image-20201230232036706.png" alt="image-20201230232036706" loading="lazy"></p>
+<p>今天完成了所有机关部分，分别为顶部尖刺，上下飞轮，弹簧垫。</p>
+<p>其实所有的机关我应该做个父类的，自己偷懒了，没有去实践父脚本这个东西。不过好在也算是全部实现了，基本上没啥问题了。</p>
+<h2 id>顶部尖刺</h2>
+<p>利用Area2D场景来做碰撞检测，因为尖刺是图块形式，而且设置在场景中后是不规则的形状，所以碰撞检测节点不在使用CollisionShape2D了，这里使用的ColiisisonPolygon，这个节点可以通过点线来设置不规则的碰撞区域，用在这里刚刚好。</p>
+<p><img src="https://cdn.1900.live/typora/image-20201230232549435.png" alt="image-20201230232549435" loading="lazy"></p>
+<h2 id>上下飞轮</h2>
+<p>这里用到了之前学移动平台时候的知识，主要原理是利用了AnimationPlayer、Path2D、Path2dFollow、RemoteTransform2D这几个组件。RemoteTransform记录当前PathFollow2D的路径，并更新给Sprite，再利用AnimationPlayer来PathFollow2D的路径更新Sprite的位置，RemoteTransForm主要是同步的作用。</p>
+<p>刚刚做的时候都忘记之前是怎么弄的了，仔细看了下<code>RemoteTransForm</code>文档里的介绍后才算是真正弄懂了这个节点的作用。</p>
+<p>另外做动画的移动的关键帧只需要设置到一半，运行到一半后数值达到指定数据后剩下后面半解动画会自动跟着相减知道0为值，这样即可达到上下来回的目的。</p>
+<p><img src="https://cdn.1900.live/typora/image-20201230232927096.png" alt="image-20201230232927096" loading="lazy"></p>
+<h2 id>弹簧垫</h2>
+<p>利用Area2d检测<code>body_entered</code>信号，传入玩家的palyer对象，更改起跳数据即可。</p>
+<p>这里的节点结构和其他机关不一样，应为弹簧垫是有碰撞体积的，所以我在Area2D下增加了一个StaticBody2D节点，这个节点下面再增加Sprite，animationPlayer等节点，这样实例化到场景里面后这个弹簧垫就有了碰撞体积。不至于人物踩在上面会重叠在一起。</p>
+<p>代码实部分</p>
+<pre><code class="language-python"># 身体进如碰撞区域的信号，并传入碰撞该物体的节点对象
+func _on_TrapSpringPad_body_entered(player):
+    # 只有在角色碰撞到的情况下才触发事件
+	if player.get_name() == &quot;Player&quot;:
+        # 让玩家跳跃高度为正常跳跃的1.5倍高
+		player.velocity.y = -player.jump_force * 1.5
+        # 并播放弹簧垫的弹动动画
+		animation_player.play(&quot;bounce&quot;)
+        # 设置玩家状态为跳跃状态。
+		player.is_jumping = true;
+</code></pre>
+<p><img src="https://cdn.1900.live/typora/image-20201230233606547.png" alt="image-20201230233606547" loading="lazy"></p>
+<h2 id>最终效果</h2>
+<p><img src="https://cdn.1900.live/typora/%E6%96%B0%E5%9C%BA%E6%99%AF_trap.gif" alt="新场景_trap" loading="lazy"></p>
+<!--kg-card-end: markdown--></article></div><div class="footer"><div><p>
+          Built with
+          <a target="_blank" href="//gridsome.org" class="link">Gridsome</a>
+          &amp; Made with ❤️ by
+          <a target="_blank" href="//alex.design" class="link">Alex Brown</a></p></div><div class="footer-links"><a target="_blank" href="/sitemap.xml">Sitemap</a><a target="_blank" href="/feed.xml">RSS Feed</a></div></div></div></main>
+    <script>window.__INITIAL_STATE__={"data":{"metadata":{"siteName":"只是玩玩 | JUST FUN","siteDescription":"\u002Fgridsome-blog"},"post":{"id":"63158312cf533d1c2cf29b42","title":"Godot游戏引擎学习 课外学习：新场景 3","content":"\u003C!--kg-card-begin: markdown--\u003E\u003Cp\u003E今天继续完成之前指定的任务，基本上算是全部完成了\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002Fimage-20201230232036706.png\" alt=\"image-20201230232036706\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E今天完成了所有机关部分，分别为顶部尖刺，上下飞轮，弹簧垫。\u003C\u002Fp\u003E\n\u003Cp\u003E其实所有的机关我应该做个父类的，自己偷懒了，没有去实践父脚本这个东西。不过好在也算是全部实现了，基本上没啥问题了。\u003C\u002Fp\u003E\n\u003Ch2 id\u003E顶部尖刺\u003C\u002Fh2\u003E\n\u003Cp\u003E利用Area2D场景来做碰撞检测，因为尖刺是图块形式，而且设置在场景中后是不规则的形状，所以碰撞检测节点不在使用CollisionShape2D了，这里使用的ColiisisonPolygon，这个节点可以通过点线来设置不规则的碰撞区域，用在这里刚刚好。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002Fimage-20201230232549435.png\" alt=\"image-20201230232549435\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch2 id\u003E上下飞轮\u003C\u002Fh2\u003E\n\u003Cp\u003E这里用到了之前学移动平台时候的知识，主要原理是利用了AnimationPlayer、Path2D、Path2dFollow、RemoteTransform2D这几个组件。RemoteTransform记录当前PathFollow2D的路径，并更新给Sprite，再利用AnimationPlayer来PathFollow2D的路径更新Sprite的位置，RemoteTransForm主要是同步的作用。\u003C\u002Fp\u003E\n\u003Cp\u003E刚刚做的时候都忘记之前是怎么弄的了，仔细看了下\u003Ccode\u003ERemoteTransForm\u003C\u002Fcode\u003E文档里的介绍后才算是真正弄懂了这个节点的作用。\u003C\u002Fp\u003E\n\u003Cp\u003E另外做动画的移动的关键帧只需要设置到一半，运行到一半后数值达到指定数据后剩下后面半解动画会自动跟着相减知道0为值，这样即可达到上下来回的目的。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002Fimage-20201230232927096.png\" alt=\"image-20201230232927096\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch2 id\u003E弹簧垫\u003C\u002Fh2\u003E\n\u003Cp\u003E利用Area2d检测\u003Ccode\u003Ebody_entered\u003C\u002Fcode\u003E信号，传入玩家的palyer对象，更改起跳数据即可。\u003C\u002Fp\u003E\n\u003Cp\u003E这里的节点结构和其他机关不一样，应为弹簧垫是有碰撞体积的，所以我在Area2D下增加了一个StaticBody2D节点，这个节点下面再增加Sprite，animationPlayer等节点，这样实例化到场景里面后这个弹簧垫就有了碰撞体积。不至于人物踩在上面会重叠在一起。\u003C\u002Fp\u003E\n\u003Cp\u003E代码实部分\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode class=\"language-python\"\u003E# 身体进如碰撞区域的信号，并传入碰撞该物体的节点对象\nfunc _on_TrapSpringPad_body_entered(player):\n    # 只有在角色碰撞到的情况下才触发事件\n\tif player.get_name() == &quot;Player&quot;:\n        # 让玩家跳跃高度为正常跳跃的1.5倍高\n\t\tplayer.velocity.y = -player.jump_force * 1.5\n        # 并播放弹簧垫的弹动动画\n\t\tanimation_player.play(&quot;bounce&quot;)\n        # 设置玩家状态为跳跃状态。\n\t\tplayer.is_jumping = true;\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002Fimage-20201230233606547.png\" alt=\"image-20201230233606547\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch2 id\u003E最终效果\u003C\u002Fh2\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002F%E6%96%B0%E5%9C%BA%E6%99%AF_trap.gif\" alt=\"新场景_trap\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003C!--kg-card-end: markdown--\u003E","date":"30 December 2020","path":"godot_game_engine_extracurricular_learning-_new_scenario_3"}},"context":{}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script><script src="/assets/js/app.86bb94d9.js" defer></script><script src="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" defer></script>
+  </body>
+</html>

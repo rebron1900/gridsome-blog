@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+  <head>
+    <title>只是玩玩 | JUST FUN - 只是玩玩 | JUST FUN</title><meta name="gridsome:hash" content="03d4e26bc6a7202eb1f57b68d71e0c4979a9960b"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.23"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="/gridsome-blog"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.9bb7ffafafc09ac851d81afb65b8ef59.png"><link rel="preload" href="/assets/css/0.styles.be694e5c.css" as="style"><link rel="preload" href="/assets/js/app.86bb94d9.js" as="script"><link rel="preload" href="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" as="script"><link rel="prefetch" href="/assets/js/6.4b802b1d.js"><link rel="prefetch" href="/assets/js/page--node-modules--gridsome--app--pages--404-vue.5fb9a6b8.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-copy-vue.caed7301.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-vue.a2bb3d29.js"><link rel="stylesheet" href="/assets/css/0.styles.be694e5c.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+  </head>
+  <body  class="darkmode">
+    <main role="main" data-server-rendered="true" id="app" class="container"><div class="row"><header class="header"><a href="/" class="active"><h1>👨‍💻 只是玩玩 | JUST FUN</h1></a><!----></header><div class="article"><h1 class="article-title">Ubuntu下SublimeText输入中文问题的解决</h1><p class="article-date"> 22 June 2014 · <i> min read</i></p><article><!--kg-card-begin: markdown--><p>关于Pyhton的编码工具我选来选出还是觉得SublimeText这款工具简单好用，Vim配置太过复杂了，我折腾了一天就放弃了，SublimeText的中文输入有一点问题，所以要写一个C的将文字传送给SublimeText～～（貌似是这样，我也是个菜鸟，这个C文件的作用我也不是太懂，我说错了的话看到这篇文章的大大给我解释一下吧- -），下面具体说下安装方式把。</p>
+<blockquote>
+<p>中文输入的问题是参考的这篇文章：<a href="http://blog.csdn.net/jokes000/article/details/8997587?ref=1900.live">http://blog.csdn.net/jokes000/article/details/8997587</a></p>
+</blockquote>
+<p>我是直接在SublimeText的官网上下的压缩文件，解压后文件夹内的SublimeText2程序是可以直接运行的，但是这个时候是无法输入中文的。</p>
+<p>首先因为要用编译C文件，所以我们要下载相应的C工具包，在shell里输入下面的命令即可：</p>
+<p>1sudoapt-get installbuild-essential2sudoapt-get installlibgtk2.0-dev</p>
+<p>然后将下面这段代码保存成sublime-imfix.c文件</p>
+<blockquote>
+<h1 id="includegtkgtkhincludegdkgdkxh">include &lt;gtk/gtk.h&gt;#include &lt;gdk/gdkx.h&gt;</h1>
+<p>typedef GdkSegment GdkRegionBox;</p>
+<p>struct _GdkRegion</p>
+<p>{</p>
+<p>long size;</p>
+<p>long numRects;</p>
+<p>GdkRegionBox *rects;</p>
+<p>GdkRegionBox extents;</p>
+<p>};</p>
+<p>GtkIMContext *local_context;</p>
+<p>voidgdk_region_get_clipbox (const GdkRegion *region , GdkRectangle *rectangle)</p>
+<p>{</p>
+<p>g_return_if_fail (region != NULL);</p>
+<p>g_return_if_fail (rectangle != NULL);</p>
+<p>rectangle-&gt;x = region-&gt;extents.x1;</p>
+<p>rectangle-&gt;y = region-&gt;extents.y1;</p>
+<p>rectangle-&gt;width = region-&gt;extents.x2 – region-&gt;extents.x1;</p>
+<p>rectangle-&gt;height = region-&gt;extents.y2 – region-&gt;extents.y1;</p>
+<p>GdkRectangle rect;</p>
+<p>rect.x = rectangle-&gt;x;</p>
+<p>rect.y = rectangle-&gt;y;</p>
+<p>rect.width = 0;</p>
+<p>rect.height = rectangle-&gt;height;</p>
+<p>if(rectangle-&gt;width == 2 &amp;&amp; GTK_IS_IM_CONTEXT(local_context)) {</p>
+<p>gtk_im_context_set_cursor_location(local_context, rectangle);</p>
+<p>}</p>
+<p>}</p>
+<p>static GdkFilterReturn event_filter (GdkXEvent *xevent, GdkEvent *event, gpointer im_context)</p>
+<p>{</p>
+<p>XEvent *xev = (XEvent *)xevent;</p>
+<p>if(xev-&gt;type == KeyRelease &amp;&amp; GTK_IS_IM_CONTEXT(im_context)) {</p>
+<p>GdkWindow * win = g_object_get_data(G_OBJECT(im_context),&quot;window&quot;);</p>
+<p>if(GDK_IS_WINDOW(win))</p>
+<p>gtk_im_context_set_client_window(im_context, win);</p>
+<p>}</p>
+<p>return GDK_FILTER_CONTINUE;</p>
+<p>}</p>
+<p>void gtk_im_context_set_client_window (GtkIMContext *context , GdkWindow *window)</p>
+<p>{</p>
+<p>GtkIMContextClass *klass;</p>
+<p>g_return_if_fail (GTK_IS_IM_CONTEXT (context));</p>
+<p>klass = GTK_IM_CONTEXT_GET_CLASS (context);</p>
+<p>if (klass-&gt;set_client_window)</p>
+<p>klass-&gt;set_client_window (context, window);</p>
+<p>if(!GDK_IS_WINDOW (window))</p>
+<p>return;</p>
+<p>g_object_set_data(G_OBJECT(context),&quot;window&quot;,window);</p>
+<p>int width = gdk_window_get_width(window);</p>
+<p>int height = gdk_window_get_height(window);</p>
+<p>if(width != 0 &amp;&amp; height !=0) {</p>
+<p>gtk_im_context_focus_in(context);</p>
+<p>local_context = context;</p>
+<p>}</p>
+<p>gdk_window_add_filter (window, event_filter, context);</p>
+<p>}</p>
+<p></p>
+</blockquote>
+<p>然后用cd命令进入你存放C文件的地方，运行下面这条命令编译文件（这行命令要一次性运行）</p>
+<blockquote>
+<p>1gcc -shared -o libsublime-imfix.so sublime_imfix.c  <code>pkg-config –libs –cflags gtk+-2.0</code> -fPIC</p>
+</blockquote>
+<p>运行后如果没有大的问题你会发现目录下出现了一个.so文件，把这个文件用mv命令移动到SublimeText的目录下面，然后用shell进入SublimeText目录后运行下面这个脚本就可以打开SublimeText输入中文了。（我的SublimeText放在Home目录下的APP文件夹下面，这里你们要改成你们自己的路径）</p>
+<blockquote>
+<p>SUBLIME_HOME=&quot;$HOME/APP/SublimeText2&quot;<br>
+LD_LIB=&quot;$SUBLIME_HOME/libsublime-imfix.so&quot;<br>
+sh  -c &quot;LD_PRELOAD=$LD_LIB  $SUBLIME_HOME/sublime_text $@&quot;</p>
+</blockquote>
+<p>当然，你也可以把SublimeText的desktop文件的Exce路径改成这个脚本文件的路径，然后就可以通过启动器启动软件了。</p>
+<p></p>
+<!--kg-card-end: markdown--></article></div><div class="footer"><div><p>
+          Built with
+          <a target="_blank" href="//gridsome.org" class="link">Gridsome</a>
+          &amp; Made with ❤️ by
+          <a target="_blank" href="//alex.design" class="link">Alex Brown</a></p></div><div class="footer-links"><a target="_blank" href="/sitemap.xml">Sitemap</a><a target="_blank" href="/feed.xml">RSS Feed</a></div></div></div></main>
+    <script>window.__INITIAL_STATE__={"data":{"metadata":{"siteName":"只是玩玩 | JUST FUN","siteDescription":"\u002Fgridsome-blog"},"post":{"id":"63158312cf533d1c2cf29a64","title":"Ubuntu下SublimeText输入中文问题的解决","content":"\u003C!--kg-card-begin: markdown--\u003E\u003Cp\u003E关于Pyhton的编码工具我选来选出还是觉得SublimeText这款工具简单好用，Vim配置太过复杂了，我折腾了一天就放弃了，SublimeText的中文输入有一点问题，所以要写一个C的将文字传送给SublimeText～～（貌似是这样，我也是个菜鸟，这个C文件的作用我也不是太懂，我说错了的话看到这篇文章的大大给我解释一下吧- -），下面具体说下安装方式把。\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E中文输入的问题是参考的这篇文章：\u003Ca href=\"http:\u002F\u002Fblog.csdn.net\u002Fjokes000\u002Farticle\u002Fdetails\u002F8997587?ref=1900.live\"\u003Ehttp:\u002F\u002Fblog.csdn.net\u002Fjokes000\u002Farticle\u002Fdetails\u002F8997587\u003C\u002Fa\u003E\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E我是直接在SublimeText的官网上下的压缩文件，解压后文件夹内的SublimeText2程序是可以直接运行的，但是这个时候是无法输入中文的。\u003C\u002Fp\u003E\n\u003Cp\u003E首先因为要用编译C文件，所以我们要下载相应的C工具包，在shell里输入下面的命令即可：\u003C\u002Fp\u003E\n\u003Cp\u003E1sudoapt-get installbuild-essential2sudoapt-get installlibgtk2.0-dev\u003C\u002Fp\u003E\n\u003Cp\u003E然后将下面这段代码保存成sublime-imfix.c文件\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Ch1 id=\"includegtkgtkhincludegdkgdkxh\"\u003Einclude &lt;gtk\u002Fgtk.h&gt;#include &lt;gdk\u002Fgdkx.h&gt;\u003C\u002Fh1\u003E\n\u003Cp\u003Etypedef GdkSegment GdkRegionBox;\u003C\u002Fp\u003E\n\u003Cp\u003Estruct _GdkRegion\u003C\u002Fp\u003E\n\u003Cp\u003E{\u003C\u002Fp\u003E\n\u003Cp\u003Elong size;\u003C\u002Fp\u003E\n\u003Cp\u003Elong numRects;\u003C\u002Fp\u003E\n\u003Cp\u003EGdkRegionBox *rects;\u003C\u002Fp\u003E\n\u003Cp\u003EGdkRegionBox extents;\u003C\u002Fp\u003E\n\u003Cp\u003E};\u003C\u002Fp\u003E\n\u003Cp\u003EGtkIMContext *local_context;\u003C\u002Fp\u003E\n\u003Cp\u003Evoidgdk_region_get_clipbox (const GdkRegion *region , GdkRectangle *rectangle)\u003C\u002Fp\u003E\n\u003Cp\u003E{\u003C\u002Fp\u003E\n\u003Cp\u003Eg_return_if_fail (region != NULL);\u003C\u002Fp\u003E\n\u003Cp\u003Eg_return_if_fail (rectangle != NULL);\u003C\u002Fp\u003E\n\u003Cp\u003Erectangle-&gt;x = region-&gt;extents.x1;\u003C\u002Fp\u003E\n\u003Cp\u003Erectangle-&gt;y = region-&gt;extents.y1;\u003C\u002Fp\u003E\n\u003Cp\u003Erectangle-&gt;width = region-&gt;extents.x2 – region-&gt;extents.x1;\u003C\u002Fp\u003E\n\u003Cp\u003Erectangle-&gt;height = region-&gt;extents.y2 – region-&gt;extents.y1;\u003C\u002Fp\u003E\n\u003Cp\u003EGdkRectangle rect;\u003C\u002Fp\u003E\n\u003Cp\u003Erect.x = rectangle-&gt;x;\u003C\u002Fp\u003E\n\u003Cp\u003Erect.y = rectangle-&gt;y;\u003C\u002Fp\u003E\n\u003Cp\u003Erect.width = 0;\u003C\u002Fp\u003E\n\u003Cp\u003Erect.height = rectangle-&gt;height;\u003C\u002Fp\u003E\n\u003Cp\u003Eif(rectangle-&gt;width == 2 &amp;&amp; GTK_IS_IM_CONTEXT(local_context)) {\u003C\u002Fp\u003E\n\u003Cp\u003Egtk_im_context_set_cursor_location(local_context, rectangle);\u003C\u002Fp\u003E\n\u003Cp\u003E}\u003C\u002Fp\u003E\n\u003Cp\u003E}\u003C\u002Fp\u003E\n\u003Cp\u003Estatic GdkFilterReturn event_filter (GdkXEvent *xevent, GdkEvent *event, gpointer im_context)\u003C\u002Fp\u003E\n\u003Cp\u003E{\u003C\u002Fp\u003E\n\u003Cp\u003EXEvent *xev = (XEvent *)xevent;\u003C\u002Fp\u003E\n\u003Cp\u003Eif(xev-&gt;type == KeyRelease &amp;&amp; GTK_IS_IM_CONTEXT(im_context)) {\u003C\u002Fp\u003E\n\u003Cp\u003EGdkWindow * win = g_object_get_data(G_OBJECT(im_context),&quot;window&quot;);\u003C\u002Fp\u003E\n\u003Cp\u003Eif(GDK_IS_WINDOW(win))\u003C\u002Fp\u003E\n\u003Cp\u003Egtk_im_context_set_client_window(im_context, win);\u003C\u002Fp\u003E\n\u003Cp\u003E}\u003C\u002Fp\u003E\n\u003Cp\u003Ereturn GDK_FILTER_CONTINUE;\u003C\u002Fp\u003E\n\u003Cp\u003E}\u003C\u002Fp\u003E\n\u003Cp\u003Evoid gtk_im_context_set_client_window (GtkIMContext *context , GdkWindow *window)\u003C\u002Fp\u003E\n\u003Cp\u003E{\u003C\u002Fp\u003E\n\u003Cp\u003EGtkIMContextClass *klass;\u003C\u002Fp\u003E\n\u003Cp\u003Eg_return_if_fail (GTK_IS_IM_CONTEXT (context));\u003C\u002Fp\u003E\n\u003Cp\u003Eklass = GTK_IM_CONTEXT_GET_CLASS (context);\u003C\u002Fp\u003E\n\u003Cp\u003Eif (klass-&gt;set_client_window)\u003C\u002Fp\u003E\n\u003Cp\u003Eklass-&gt;set_client_window (context, window);\u003C\u002Fp\u003E\n\u003Cp\u003Eif(!GDK_IS_WINDOW (window))\u003C\u002Fp\u003E\n\u003Cp\u003Ereturn;\u003C\u002Fp\u003E\n\u003Cp\u003Eg_object_set_data(G_OBJECT(context),&quot;window&quot;,window);\u003C\u002Fp\u003E\n\u003Cp\u003Eint width = gdk_window_get_width(window);\u003C\u002Fp\u003E\n\u003Cp\u003Eint height = gdk_window_get_height(window);\u003C\u002Fp\u003E\n\u003Cp\u003Eif(width != 0 &amp;&amp; height !=0) {\u003C\u002Fp\u003E\n\u003Cp\u003Egtk_im_context_focus_in(context);\u003C\u002Fp\u003E\n\u003Cp\u003Elocal_context = context;\u003C\u002Fp\u003E\n\u003Cp\u003E}\u003C\u002Fp\u003E\n\u003Cp\u003Egdk_window_add_filter (window, event_filter, context);\u003C\u002Fp\u003E\n\u003Cp\u003E}\u003C\u002Fp\u003E\n\u003Cp\u003E\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E然后用cd命令进入你存放C文件的地方，运行下面这条命令编译文件（这行命令要一次性运行）\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E1gcc -shared -o libsublime-imfix.so sublime_imfix.c  \u003Ccode\u003Epkg-config –libs –cflags gtk+-2.0\u003C\u002Fcode\u003E -fPIC\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E运行后如果没有大的问题你会发现目录下出现了一个.so文件，把这个文件用mv命令移动到SublimeText的目录下面，然后用shell进入SublimeText目录后运行下面这个脚本就可以打开SublimeText输入中文了。（我的SublimeText放在Home目录下的APP文件夹下面，这里你们要改成你们自己的路径）\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003ESUBLIME_HOME=&quot;$HOME\u002FAPP\u002FSublimeText2&quot;\u003Cbr\u003E\nLD_LIB=&quot;$SUBLIME_HOME\u002Flibsublime-imfix.so&quot;\u003Cbr\u003E\nsh  -c &quot;LD_PRELOAD=$LD_LIB  $SUBLIME_HOME\u002Fsublime_text $@&quot;\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E当然，你也可以把SublimeText的desktop文件的Exce路径改成这个脚本文件的路径，然后就可以通过启动器启动软件了。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003C\u002Fp\u003E\n\u003C!--kg-card-end: markdown--\u003E","date":"22 June 2014","path":"the-solution-of-the-problem-under-ubuntu-sublimetext-input-chinese"}},"context":{}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script><script src="/assets/js/app.86bb94d9.js" defer></script><script src="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" defer></script>
+  </body>
+</html>

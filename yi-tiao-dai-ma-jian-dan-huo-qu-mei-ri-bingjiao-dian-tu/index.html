@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+  <head>
+    <title>只是玩玩 | JUST FUN - 只是玩玩 | JUST FUN</title><meta name="gridsome:hash" content="03d4e26bc6a7202eb1f57b68d71e0c4979a9960b"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.23"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="/gridsome-blog"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.9bb7ffafafc09ac851d81afb65b8ef59.png"><link rel="preload" href="/assets/css/0.styles.be694e5c.css" as="style"><link rel="preload" href="/assets/js/app.86bb94d9.js" as="script"><link rel="preload" href="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" as="script"><link rel="prefetch" href="/assets/js/6.4b802b1d.js"><link rel="prefetch" href="/assets/js/page--node-modules--gridsome--app--pages--404-vue.5fb9a6b8.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-copy-vue.caed7301.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-vue.a2bb3d29.js"><link rel="stylesheet" href="/assets/css/0.styles.be694e5c.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+  </head>
+  <body  class="darkmode">
+    <main role="main" data-server-rendered="true" id="app" class="container"><div class="row"><header class="header"><a href="/" class="active"><h1>👨‍💻 只是玩玩 | JUST FUN</h1></a><!----></header><div class="article"><h1 class="article-title">一条URL简单获取每日bing焦点图</h1><p class="article-date"> 8 September 2016 · <i> min read</i></p><article><!--kg-card-begin: markdown--><h2 id>缘起</h2>
+<p>看着每天都是一样的顶部图片忽然觉得有点了无生趣，没有惊喜，生活不该这样。</p>
+<p>而后又想到windows10登录界面时候的焦点图片可不可以用来做top图片，遂找了一下相关的资料，发现bing有一个接口返回的json里可以获取到焦点图片的url，操作了一下代码如下：</p>
+<p><code>json地址：http://cn.bing.com/HPImageArchive.aspx?format=js&amp;idx=0&amp;n=1</code></p>
+<p>返回的数据如下：</p>
+<pre><code class="language-js">
+{
+    "images": [
+        {
+            "startdate": "20160907", 
+            "fullstartdate": "201609071600", 
+            "enddate": "20160908", 
+            "url": "http://s.cn.bing.net/az/hprichbg/rb/Stadsbiblioteket_ZH-CN6055045711_1920x1080.jpg", 
+            "urlbase": "/az/hprichbg/rb/Stadsbiblioteket_ZH-CN6055045711", 
+            "copyright": "斯德哥尔摩公共图书馆，瑞典斯德哥尔摩 (© Gallery Stock)", 
+            "copyrightlink": "http://www.bing.com/search?q=%E6%96%AF%E5%BE%B7%E5%93%A5%E5%B0%94%E6%91%A9%E5%85%AC%E5%85%B1%E5%9B%BE%E4%B9%A6%E9%A6%86&form=hpcapt&mkt=zh-cn", 
+            "wp": true, 
+            "hsh": "e4dac1ad80973e47b40683281c562497", 
+            "drk": 1, 
+            "top": 1, 
+            "bot": 1, 
+            "hs": [ ]
+        }
+    ], 
+    "tooltips": {
+        "loading": "正在加载...", 
+        "previous": "上一个图像", 
+        "next": "下一个图像", 
+        "walle": "此图片不能下载用作壁纸。", 
+        "walls": "下载今日美图。仅限用作桌面壁纸。"
+    }
+}
+</code>
+</pre>
+<p>可以发现，images对象下的url属性就是当日bing的图片，我们可以直接获取图片后用jquery改变背景，但是我被残酷百度残酷的告知不能跨域请求，必须要在自己的服务器端做好请求页面，然后js请求本地页面。。</p>
+<pre>
+<code class="language-js">
+$(document).ready(function(){
+
+    $.ajax({
+          type:"get",
+          url:"http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1",
+          dataType:"json",
+          success: function(data){
+            $("#header").css("background-image","url("+data['images']['url']+")");
+          }
+    });
+</code>
+</pre>
+<p>不过我也是百折不挠的人遂又找到了一个跨域请求的中间站<a href="https://jsonp.afeld.me/?ref=1900.live">JSONProxy</a>，这个网站提供了跨域的请求函数，传过去一个跨域url，还你一个漂亮感觉的json...可惜事实总是残酷的，貌似对微软爸爸的链接并不起作用，但是还是mark过来一下，没准以后能用上。</p>
+<pre><code class="language-js">
+$(document).ready(function(){
+    $.getJSON('https://jsonp.afeld.me/?callback=?&url=http://cn.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1', 
+        function(data){
+        alert('返回数据：' + data);
+    });
+});
+</code></pre>
+
+<h2 id>缘灭</h2>
+<p>最后！我发现通过这个地址可以直接获取当日的图片！！！<br>
+<code>http://www.dujin.org/sys/bing/1366.php</code><br>
+<img src="http://www.dujin.org/sys/bing/1366.php" alt="今日bing图片" loading="lazy"></p>
+<!--kg-card-end: markdown--></article></div><div class="footer"><div><p>
+          Built with
+          <a target="_blank" href="//gridsome.org" class="link">Gridsome</a>
+          &amp; Made with ❤️ by
+          <a target="_blank" href="//alex.design" class="link">Alex Brown</a></p></div><div class="footer-links"><a target="_blank" href="/sitemap.xml">Sitemap</a><a target="_blank" href="/feed.xml">RSS Feed</a></div></div></div></main>
+    <script>window.__INITIAL_STATE__={"data":{"metadata":{"siteName":"只是玩玩 | JUST FUN","siteDescription":"\u002Fgridsome-blog"},"post":{"id":"63158312cf533d1c2cf29947","title":"一条URL简单获取每日bing焦点图","content":"\u003C!--kg-card-begin: markdown--\u003E\u003Ch2 id\u003E缘起\u003C\u002Fh2\u003E\n\u003Cp\u003E看着每天都是一样的顶部图片忽然觉得有点了无生趣，没有惊喜，生活不该这样。\u003C\u002Fp\u003E\n\u003Cp\u003E而后又想到windows10登录界面时候的焦点图片可不可以用来做top图片，遂找了一下相关的资料，发现bing有一个接口返回的json里可以获取到焦点图片的url，操作了一下代码如下：\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Ccode\u003Ejson地址：http:\u002F\u002Fcn.bing.com\u002FHPImageArchive.aspx?format=js&amp;idx=0&amp;n=1\u003C\u002Fcode\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E返回的数据如下：\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode class=\"language-js\"\u003E\n{\n    \"images\": [\n        {\n            \"startdate\": \"20160907\", \n            \"fullstartdate\": \"201609071600\", \n            \"enddate\": \"20160908\", \n            \"url\": \"http:\u002F\u002Fs.cn.bing.net\u002Faz\u002Fhprichbg\u002Frb\u002FStadsbiblioteket_ZH-CN6055045711_1920x1080.jpg\", \n            \"urlbase\": \"\u002Faz\u002Fhprichbg\u002Frb\u002FStadsbiblioteket_ZH-CN6055045711\", \n            \"copyright\": \"斯德哥尔摩公共图书馆，瑞典斯德哥尔摩 (© Gallery Stock)\", \n            \"copyrightlink\": \"http:\u002F\u002Fwww.bing.com\u002Fsearch?q=%E6%96%AF%E5%BE%B7%E5%93%A5%E5%B0%94%E6%91%A9%E5%85%AC%E5%85%B1%E5%9B%BE%E4%B9%A6%E9%A6%86&form=hpcapt&mkt=zh-cn\", \n            \"wp\": true, \n            \"hsh\": \"e4dac1ad80973e47b40683281c562497\", \n            \"drk\": 1, \n            \"top\": 1, \n            \"bot\": 1, \n            \"hs\": [ ]\n        }\n    ], \n    \"tooltips\": {\n        \"loading\": \"正在加载...\", \n        \"previous\": \"上一个图像\", \n        \"next\": \"下一个图像\", \n        \"walle\": \"此图片不能下载用作壁纸。\", \n        \"walls\": \"下载今日美图。仅限用作桌面壁纸。\"\n    }\n}\n\u003C\u002Fcode\u003E\n\u003C\u002Fpre\u003E\n\u003Cp\u003E可以发现，images对象下的url属性就是当日bing的图片，我们可以直接获取图片后用jquery改变背景，但是我被残酷百度残酷的告知不能跨域请求，必须要在自己的服务器端做好请求页面，然后js请求本地页面。。\u003C\u002Fp\u003E\n\u003Cpre\u003E\n\u003Ccode class=\"language-js\"\u003E\n$(document).ready(function(){\n\n    $.ajax({\n          type:\"get\",\n          url:\"http:\u002F\u002Fcn.bing.com\u002FHPImageArchive.aspx?format=js&idx=0&n=1\",\n          dataType:\"json\",\n          success: function(data){\n            $(\"#header\").css(\"background-image\",\"url(\"+data['images']['url']+\")\");\n          }\n    });\n\u003C\u002Fcode\u003E\n\u003C\u002Fpre\u003E\n\u003Cp\u003E不过我也是百折不挠的人遂又找到了一个跨域请求的中间站\u003Ca href=\"https:\u002F\u002Fjsonp.afeld.me\u002F?ref=1900.live\"\u003EJSONProxy\u003C\u002Fa\u003E，这个网站提供了跨域的请求函数，传过去一个跨域url，还你一个漂亮感觉的json...可惜事实总是残酷的，貌似对微软爸爸的链接并不起作用，但是还是mark过来一下，没准以后能用上。\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode class=\"language-js\"\u003E\n$(document).ready(function(){\n    $.getJSON('https:\u002F\u002Fjsonp.afeld.me\u002F?callback=?&url=http:\u002F\u002Fcn.bing.com\u002FHPImageArchive.aspx?format=js&idx=0&n=1', \n        function(data){\n        alert('返回数据：' + data);\n    });\n});\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\n\u003Ch2 id\u003E缘灭\u003C\u002Fh2\u003E\n\u003Cp\u003E最后！我发现通过这个地址可以直接获取当日的图片！！！\u003Cbr\u003E\n\u003Ccode\u003Ehttp:\u002F\u002Fwww.dujin.org\u002Fsys\u002Fbing\u002F1366.php\u003C\u002Fcode\u003E\u003Cbr\u003E\n\u003Cimg src=\"http:\u002F\u002Fwww.dujin.org\u002Fsys\u002Fbing\u002F1366.php\" alt=\"今日bing图片\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003C!--kg-card-end: markdown--\u003E","date":"8 September 2016","path":"yi-tiao-dai-ma-jian-dan-huo-qu-mei-ri-bingjiao-dian-tu"}},"context":{}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script><script src="/assets/js/app.86bb94d9.js" defer></script><script src="/assets/js/page--src--templates--ghost-post-vue.0de93747.js" defer></script>
+  </body>
+</html>
