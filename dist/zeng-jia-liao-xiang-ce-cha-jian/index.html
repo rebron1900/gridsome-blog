@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+  <head>
+    <title>只是玩玩 | JUST FUN - 只是玩玩 | JUST FUN</title><meta name="gridsome:hash" content="c172d95f3caedc458b15c41bd34a3ceddae884e7"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.23"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="/gridsome-blog"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.9bb7ffafafc09ac851d81afb65b8ef59.png"><link rel="preload" href="/assets/css/0.styles.be694e5c.css" as="style"><link rel="preload" href="/assets/js/app.b62e6b44.js" as="script"><link rel="preload" href="/assets/js/page--src--templates--ghost-post-vue.9ef213ea.js" as="script"><link rel="prefetch" href="/assets/js/6.bfbe7afa.js"><link rel="prefetch" href="/assets/js/page--node-modules--gridsome--app--pages--404-vue.37be74ee.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-copy-vue.a63bb83d.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-vue.32fdddc8.js"><link rel="stylesheet" href="/assets/css/0.styles.be694e5c.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+  </head>
+  <body  class="darkmode">
+    <main role="main" data-server-rendered="true" id="app" class="container"><div class="row"><header class="header"><a href="/" class="active"><h1>👨‍💻 只是玩玩 | JUST FUN</h1></a><!----></header><div class="article"><h1 class="article-title">之前相册页面的后序</h1><p class="article-date"> 13 December 2016 · <i> min read</i></p><article><!--kg-card-begin: markdown--><h3 id>流产的相册页面</h3>
+<p>之前有写过一篇文章：<a href="https://1900.live/the-gallery-page/">写了个相册页面</a>，当时做了一个页面打算专门用来展示博客之内的所有图片。但是钻了牛角尖在处理后面获取文章内的图片数据时遇到了难题，并且我并不熟悉node.js的编写，也不熟悉Handlebars，对全英文的ghost的api文档更只是一知半解，所以苦于无法下手而搁置流产了。</p>
+<p><img src="https://cdn.1900.live/image/7/4e/256df8d7aa47e617eddddcbb686b4.png" alt="之前的效果" loading="lazy"></p>
+<h3 id>新的思路</h3>
+<p>之前<a href="http://www.timem.cn/?ref=1900.live">匿名者</a>推荐过一个主题，作者是<a href="http://www.akina.pw/?ref=1900.live">akina</a>，但是是一个wordpress的主题，并不适用，在浏览作者博客时发现他的相册页面我似乎可以借鉴过来。总结了一下他的设计</p>
+<ol>
+<li>相册以文章形式展示，并设置封面图。</li>
+<li>相册文章设置特定类别用作和其他文章区分。</li>
+<li>列表状态下展示文章特色图片</li>
+</ol>
+<p>相较我之前的想法来说更合理也更容易在Ghost上实现。</p>
+<p>而后我查看了akina的相册插件，使用的是一款名为：<a href="https://github.com/feimosi/baguetteBox.js?ref=1900.live">baguetteBox</a>的js插件，可以以顶层模态窗口的形式展示图片，并且有很多动画效果、支持多浏览器、支持针对不同分辨率展现不同的图片等等，具体情况可以点击左边github链接进去看看，现在用在我博客效果如下：</p>
+<p><img src="https://cdn.1900.live/image/e/71/f0501654f57e245c0b7839c6aed6d.png" alt="baguetteBox效果图" loading="lazy"></p>
+<h3 id>插件的使用</h3>
+<p>插件使用很简单，先在head处导入js代码和css文件</p>
+<pre><code>&lt;link rel=&quot;stylesheet&quot; href=&quot;css/baguetteBox.min.css&quot;&gt;
+&lt;script src=&quot;js/baguetteBox.min.js&quot; async&gt;&lt;/script&gt;
+</code></pre>
+<p>并在需要实现效果的地方增加以下格式，图片被a链接包裹，链接href指向图片地址（这里可以设置为图片显示为缩略图，a链接的href指向原图）</p>
+<pre><code>&lt;div class=&quot;gallery&quot;&gt;
+    &lt;a href=&quot;img/2-1.jpg&quot; data-caption=&quot;Image caption&quot;&gt;
+        &lt;img src=&quot;img/thumbs/2-1.jpg&quot; alt=&quot;First image&quot;&gt;
+    &lt;/a&gt;
+    &lt;a href=&quot;img/2-2.jpg&quot;&gt;
+        &lt;img src=&quot;img/thumbs/2-2.jpg&quot; alt=&quot;Second image&quot;&gt;
+    &lt;/a&gt;
+    ...
+&lt;/div&gt;
+</code></pre>
+<p>之后再在网页底部编写js，在文档加载完之后初始化相册组件</p>
+<pre><code>&lt;script type=&quot;text/javascript&quot; &gt;
+  baguetteBox.run('.gallery', {
+      // Custom options
+  });
+&lt;/script&gt;
+</code></pre>
+<h3 id>适配实际情况</h3>
+<p>由于ghost使用了Handlebars做为模版语言，而我并不会做相关的后台代码编写所以只能在前台用js实现了。我的想法是在文档加载完之后获取文章主题内的所有img元素，并通过jquery的函数给每一个img标签增加a标签的父元素，并设置href属性。</p>
+<pre><code>function(){
+    $(&quot;.content img&quot;).each(function(){ 
+            $(this).wrap(&quot;&lt;a href=&quot;+this.src+&quot;&gt;&lt;/a&gt;&quot;)
+    });
+    $(&quot;.content&quot;).addClass(&quot;gallery&quot;);
+    baguetteBox.run('.gallery', {animation: 'fadeIn'});
+}
+</code></pre>
+<p><img src="https://cdn.1900.live/image/8/ad/366a4c352dfa3411cd38312e4f1ca.png" alt="akina相册" loading="lazy"><br>
+这里我想实现akina上的悬浮效果：鼠标悬浮的图片突出显示，其他图片淡化显示。但是我又不想让所有图片都这样，只有上传的系列图片时才做这样的显示。所以我这里在上面的代码中间增加了一个判断，因为上传图片时在ghost后台只能设置alt属性，所以我在系列图片的alt属性里增加一个字符G，并在增加完文章之后用jquery查询文章中所有alt中带G的图片，并用wrapAll函数将这些元素包裹在指定元素中。</p>
+<pre><code>    if($(&quot;[alt='G']&quot;).length != 0){
+        $(&quot;[alt='G']&quot;).parent().wrapAll(&quot;&lt;div class='ggrid'&gt;&lt;/div&gt;&quot;);
+    }
+</code></pre>
+<p>并编写相关的CSS，这里利用的是not:hover这个元素实现的效果</p>
+<pre><code>.ggrid a{
+  -moz-transition:all 0.25s ease;
+  -webkit-transition:all 0.25s ease;
+  -o-transition:all 0.25s ease;
+  -ms-transition:all 0.25s ease;
+  transition:all 0.25s ease;
+}
+
+.ggrid:hover a:not(:hover){
+  opacity:0.7;
+  -moz-transform:scale(0.9);
+  -ms-transform:scale(0.9);
+  -webkit-transform:scale(0.9);
+  -o-transform:scale(0.9);transform:scale(0.9);
+}
+</code></pre>
+<p>最后我这里实现的最终效果请查看这个<a href="https://1900.live/freedom-of-wild-life/">页面</a>。</p>
+<h3 id>最后</h3>
+<p>目前还有列表以块状展示的效果还没有实现，争取早点写好css。另外，这里虽然我已经在akina上留言说过我已经借鉴他的相关代码，但是还没有经过同意，我这算是先斩后奏了...如果不允许我只有再另外写了...</p>
+<h3 id="1214">12月14日更新</h3>
+<p>!:如果想要显示图片说明信息需要设置a链接的title属性，官方文档写的不清不楚，搞的我把信息设置在img标签的alt上，一直显示不出来，害我查了好久。。。</p>
+<!--kg-card-end: markdown--></article></div><div class="footer"><div><p>
+          Built with
+          <a target="_blank" href="//gridsome.org" class="link">Gridsome</a>
+          &amp; Made with ❤️ by
+          <a target="_blank" href="//alex.design" class="link">Alex Brown</a></p></div><div class="footer-links"><a target="_blank" href="/sitemap.xml">Sitemap</a><a target="_blank" href="/feed.xml">RSS Feed</a></div></div></div></main>
+    <script>window.__INITIAL_STATE__={"data":{"metadata":{"siteName":"只是玩玩 | JUST FUN","siteDescription":"\u002Fgridsome-blog"},"post":{"id":"63158312cf533d1c2cf29973","title":"之前相册页面的后序","content":"\u003C!--kg-card-begin: markdown--\u003E\u003Ch3 id\u003E流产的相册页面\u003C\u002Fh3\u003E\n\u003Cp\u003E之前有写过一篇文章：\u003Ca href=\"https:\u002F\u002F1900.live\u002Fthe-gallery-page\u002F\"\u003E写了个相册页面\u003C\u002Fa\u003E，当时做了一个页面打算专门用来展示博客之内的所有图片。但是钻了牛角尖在处理后面获取文章内的图片数据时遇到了难题，并且我并不熟悉node.js的编写，也不熟悉Handlebars，对全英文的ghost的api文档更只是一知半解，所以苦于无法下手而搁置流产了。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Fimage\u002F7\u002F4e\u002F256df8d7aa47e617eddddcbb686b4.png\" alt=\"之前的效果\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch3 id\u003E新的思路\u003C\u002Fh3\u003E\n\u003Cp\u003E之前\u003Ca href=\"http:\u002F\u002Fwww.timem.cn\u002F?ref=1900.live\"\u003E匿名者\u003C\u002Fa\u003E推荐过一个主题，作者是\u003Ca href=\"http:\u002F\u002Fwww.akina.pw\u002F?ref=1900.live\"\u003Eakina\u003C\u002Fa\u003E，但是是一个wordpress的主题，并不适用，在浏览作者博客时发现他的相册页面我似乎可以借鉴过来。总结了一下他的设计\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003E相册以文章形式展示，并设置封面图。\u003C\u002Fli\u003E\n\u003Cli\u003E相册文章设置特定类别用作和其他文章区分。\u003C\u002Fli\u003E\n\u003Cli\u003E列表状态下展示文章特色图片\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E相较我之前的想法来说更合理也更容易在Ghost上实现。\u003C\u002Fp\u003E\n\u003Cp\u003E而后我查看了akina的相册插件，使用的是一款名为：\u003Ca href=\"https:\u002F\u002Fgithub.com\u002Ffeimosi\u002FbaguetteBox.js?ref=1900.live\"\u003EbaguetteBox\u003C\u002Fa\u003E的js插件，可以以顶层模态窗口的形式展示图片，并且有很多动画效果、支持多浏览器、支持针对不同分辨率展现不同的图片等等，具体情况可以点击左边github链接进去看看，现在用在我博客效果如下：\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Fimage\u002Fe\u002F71\u002Ff0501654f57e245c0b7839c6aed6d.png\" alt=\"baguetteBox效果图\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch3 id\u003E插件的使用\u003C\u002Fh3\u003E\n\u003Cp\u003E插件使用很简单，先在head处导入js代码和css文件\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003E&lt;link rel=&quot;stylesheet&quot; href=&quot;css\u002FbaguetteBox.min.css&quot;&gt;\n&lt;script src=&quot;js\u002FbaguetteBox.min.js&quot; async&gt;&lt;\u002Fscript&gt;\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E并在需要实现效果的地方增加以下格式，图片被a链接包裹，链接href指向图片地址（这里可以设置为图片显示为缩略图，a链接的href指向原图）\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003E&lt;div class=&quot;gallery&quot;&gt;\n    &lt;a href=&quot;img\u002F2-1.jpg&quot; data-caption=&quot;Image caption&quot;&gt;\n        &lt;img src=&quot;img\u002Fthumbs\u002F2-1.jpg&quot; alt=&quot;First image&quot;&gt;\n    &lt;\u002Fa&gt;\n    &lt;a href=&quot;img\u002F2-2.jpg&quot;&gt;\n        &lt;img src=&quot;img\u002Fthumbs\u002F2-2.jpg&quot; alt=&quot;Second image&quot;&gt;\n    &lt;\u002Fa&gt;\n    ...\n&lt;\u002Fdiv&gt;\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E之后再在网页底部编写js，在文档加载完之后初始化相册组件\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003E&lt;script type=&quot;text\u002Fjavascript&quot; &gt;\n  baguetteBox.run('.gallery', {\n      \u002F\u002F Custom options\n  });\n&lt;\u002Fscript&gt;\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Ch3 id\u003E适配实际情况\u003C\u002Fh3\u003E\n\u003Cp\u003E由于ghost使用了Handlebars做为模版语言，而我并不会做相关的后台代码编写所以只能在前台用js实现了。我的想法是在文档加载完之后获取文章主题内的所有img元素，并通过jquery的函数给每一个img标签增加a标签的父元素，并设置href属性。\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003Efunction(){\n    $(&quot;.content img&quot;).each(function(){ \n            $(this).wrap(&quot;&lt;a href=&quot;+this.src+&quot;&gt;&lt;\u002Fa&gt;&quot;)\n    });\n    $(&quot;.content&quot;).addClass(&quot;gallery&quot;);\n    baguetteBox.run('.gallery', {animation: 'fadeIn'});\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Fimage\u002F8\u002Fad\u002F366a4c352dfa3411cd38312e4f1ca.png\" alt=\"akina相册\" loading=\"lazy\"\u003E\u003Cbr\u003E\n这里我想实现akina上的悬浮效果：鼠标悬浮的图片突出显示，其他图片淡化显示。但是我又不想让所有图片都这样，只有上传的系列图片时才做这样的显示。所以我这里在上面的代码中间增加了一个判断，因为上传图片时在ghost后台只能设置alt属性，所以我在系列图片的alt属性里增加一个字符G，并在增加完文章之后用jquery查询文章中所有alt中带G的图片，并用wrapAll函数将这些元素包裹在指定元素中。\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003E    if($(&quot;[alt='G']&quot;).length != 0){\n        $(&quot;[alt='G']&quot;).parent().wrapAll(&quot;&lt;div class='ggrid'&gt;&lt;\u002Fdiv&gt;&quot;);\n    }\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E并编写相关的CSS，这里利用的是not:hover这个元素实现的效果\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode\u003E.ggrid a{\n  -moz-transition:all 0.25s ease;\n  -webkit-transition:all 0.25s ease;\n  -o-transition:all 0.25s ease;\n  -ms-transition:all 0.25s ease;\n  transition:all 0.25s ease;\n}\n\n.ggrid:hover a:not(:hover){\n  opacity:0.7;\n  -moz-transform:scale(0.9);\n  -ms-transform:scale(0.9);\n  -webkit-transform:scale(0.9);\n  -o-transform:scale(0.9);transform:scale(0.9);\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E最后我这里实现的最终效果请查看这个\u003Ca href=\"https:\u002F\u002F1900.live\u002Ffreedom-of-wild-life\u002F\"\u003E页面\u003C\u002Fa\u003E。\u003C\u002Fp\u003E\n\u003Ch3 id\u003E最后\u003C\u002Fh3\u003E\n\u003Cp\u003E目前还有列表以块状展示的效果还没有实现，争取早点写好css。另外，这里虽然我已经在akina上留言说过我已经借鉴他的相关代码，但是还没有经过同意，我这算是先斩后奏了...如果不允许我只有再另外写了...\u003C\u002Fp\u003E\n\u003Ch3 id=\"1214\"\u003E12月14日更新\u003C\u002Fh3\u003E\n\u003Cp\u003E!:如果想要显示图片说明信息需要设置a链接的title属性，官方文档写的不清不楚，搞的我把信息设置在img标签的alt上，一直显示不出来，害我查了好久。。。\u003C\u002Fp\u003E\n\u003C!--kg-card-end: markdown--\u003E","date":"13 December 2016","path":"zeng-jia-liao-xiang-ce-cha-jian"}},"context":{}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script><script src="/assets/js/app.b62e6b44.js" defer></script><script src="/assets/js/page--src--templates--ghost-post-vue.9ef213ea.js" defer></script>
+  </body>
+</html>

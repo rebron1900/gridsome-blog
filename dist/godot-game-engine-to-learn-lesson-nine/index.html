@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html data-html-server-rendered="true" lang="en" data-vue-tag="%7B%22lang%22:%7B%22ssr%22:%22en%22%7D%7D">
+  <head>
+    <title>只是玩玩 | JUST FUN - 只是玩玩 | JUST FUN</title><meta name="gridsome:hash" content="c172d95f3caedc458b15c41bd34a3ceddae884e7"><meta data-vue-tag="ssr" charset="utf-8"><meta data-vue-tag="ssr" name="generator" content="Gridsome v0.7.23"><meta data-vue-tag="ssr" data-key="viewport" name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta data-vue-tag="ssr" data-key="format-detection" name="format-detection" content="telephone=no"><meta data-vue-tag="ssr" data-key="description" name="description" content="/gridsome-blog"><link data-vue-tag="ssr" rel="icon" href="data:,"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="16x16" href="/assets/static/favicon.ce0531f.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="32x32" href="/assets/static/favicon.ac8d93a.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="icon" type="image/png" sizes="96x96" href="/assets/static/favicon.b9532cc.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="76x76" href="/assets/static/favicon.f22e9f3.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="152x152" href="/assets/static/favicon.62d22cb.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="120x120" href="/assets/static/favicon.1539b60.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="167x167" href="/assets/static/favicon.dc0cdc5.9bb7ffafafc09ac851d81afb65b8ef59.png"><link data-vue-tag="ssr" rel="apple-touch-icon" type="image/png" sizes="180x180" href="/assets/static/favicon.7b22250.9bb7ffafafc09ac851d81afb65b8ef59.png"><link rel="preload" href="/assets/css/0.styles.be694e5c.css" as="style"><link rel="preload" href="/assets/js/app.b62e6b44.js" as="script"><link rel="preload" href="/assets/js/page--src--templates--ghost-post-vue.9ef213ea.js" as="script"><link rel="prefetch" href="/assets/js/6.bfbe7afa.js"><link rel="prefetch" href="/assets/js/page--node-modules--gridsome--app--pages--404-vue.37be74ee.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-copy-vue.a63bb83d.js"><link rel="prefetch" href="/assets/js/page--src--pages--index-vue.32fdddc8.js"><link rel="stylesheet" href="/assets/css/0.styles.be694e5c.css"><noscript data-vue-tag="ssr"><style>.g-image--loading{display:none;}</style></noscript>
+  </head>
+  <body  class="darkmode">
+    <main role="main" data-server-rendered="true" id="app" class="container"><div class="row"><header class="header"><a href="/" class="active"><h1>👨‍💻 只是玩玩 | JUST FUN</h1></a><!----></header><div class="article"><h1 class="article-title">Godot游戏引擎学习 第九课</h1><p class="article-date"> 27 December 2020 · <i> min read</i></p><article><!--kg-card-begin: markdown--><h2 id="shader">再次学习Shader</h2>
+<p>这里先吐槽一句，以前玩全没接触过，在没有概念的情况下看待未知的事物的感觉真不好。跟着UP主把代码写出来效果实现后却对这些参数函数的意义完全不懂。</p>
+<p>所以我索性上Godot的官方文档里重新认真大概了解一下Shader是什么东西，以下写的东西都是在Godot里的情况</p>
+<blockquote>
+<p>着色器是在图形处理器上运行的独特程序。它们用于指定如何获取网格数据(顶点位置、颜色、法线等等)然后把它们绘制到屏幕上。着色器并不像普通程序那样处理信息，因为它们经过了优化，可以在图形处理器上运行。其结果是，着色器在运行后不会保留数据；它们把最后一种颜色输出到屏幕上，然后继续。因此，无法访问着色器上次运行时的颜色输出。</p>
+</blockquote>
+<p>首先是Shader的类型，一个shader着色器开头必须定义它的类型，官方给了三种，分别是：</p>
+<ol>
+<li>Spatial：用于3d渲染</li>
+<li>canvas_item：用于2D渲染</li>
+<li>particles：用于粒子系统</li>
+</ol>
+<p>定义完Shader类型后要写一个主入口函数，也分为三种</p>
+<ol>
+<li>vertex()：运行在所有网格的定点上，并设置他们的位置及部分其他每个顶点的变量。</li>
+<li>fragment()：官方没说，应该是为每个像素运行的。</li>
+<li>light()：为每个像素和美术光照。</li>
+</ol>
+<blockquote>
+<p>吐槽一下，Godot的官方文档翻译好烂啊....，哎，不过有总比没有好，毕竟都是网友翻译的。（这里不是否定大家的工作，相反还要感谢。）</p>
+</blockquote>
+<p>这样就大概完成函数主体了，接下来我们就可以在主题中对像素进行操作了。</p>
+<p>我目前理解的一些东西就是。</p>
+<ol>
+<li>可以通过vec4变量来储存图片的rpga通道，当然也有三位变量储存rgb颜色值。</li>
+<li>可以通过texture函数获取外部贴图</li>
+<li>UV代表一个像素再网格中的坐标，最小是0，最大是1，分为r,x,g,y，这里r和g我不知道是什么意思，但是x应该是水平坐标，y为垂直坐标。</li>
+<li>COLOR代表当前像素的原本颜色，你可以给与一个vec4变量来改变颜色。</li>
+</ol>
+<p>目前的理解大概就是这样，当然只是最基础的部分。Shader肯定没这么简单，但是我现在也不需要了解的非常深刻，但是要有一些基础原理的理解有利于以后的学习。</p>
+<h2 id="godotshader">Godot里利用shader完成花里胡哨转场</h2>
+<p>首先为Globals的<code>ColorRect</code>添加一个<code>ShaderMaterial</code>，并添加如下代码如下：</p>
+<pre><code class="language-java">shader_type canvas_item; 
+
+// 定义默认值
+// 渐变边界
+uniform float cutoff: hint_range(0.0, 1.0) = 0.5;
+// 模糊级别
+uniform float feather:hint_range(0.0, 1.0) = 0.1;
+// 2D纹理
+uniform sampler2D mask;
+
+// 片段函数，可以对图片中的每个像素进行操作
+void fragment()
+{
+	// 顶一个思维变量，代表像素的四个通道的颜色，分别是Red Green Blue Alpha
+	vec4 col = vec4(0.0, 0.0, 0.0, 1.0);
+	// 读取外部纹理
+	vec4 v = texture(mask, UV);
+	
+//	//如果uv的横向还没到我们的效果区域则全部设置为透明
+//	if(UV.x &lt; cutoff - feather){
+//		col.a = 0.0
+//	//如果横向坐标到达效果区的最右边
+//	}else if(UV.x &lt; cutoff){
+//		// 则讲透明度设置成边界减羽化值
+//		col.a = (UV.x - (cutoff - feather))
+//	}
+	
+	// 这个函数不太懂，看了下官方手册是一个插值函数，原理是一个名为：埃尔米特插值法(Hermite interpolation)的东西，我完全看不懂。
+	// up的解释是如果最后一个参数小于第一个参数则返回0，大于第二个参数则返回1，介于第一个参数和第二个参数之间的话返回一个过渡值
+	// 第三个为啥用纹理像素中的r通道，我自己测试了一下，其他通道也是可以，我觉得只是为了界定像素在哪个位置而已。
+	col.a = smoothstep(cutoff - feather, cutoff, v.g * (1.0 -feather));
+	
+	// 应用颜色
+	COLOR = col;
+}
+</code></pre>
+<p>然后修改fadein动画，动态改变代码中设置的<code>cutoff</code>和<code>feather</code>值。</p>
+<p>效果如下：</p>
+<p><img src="https://cdn.1900.live/typora/%E7%AC%AC%E4%B9%9D%E8%AF%BE_shader_tranistion.gif" alt="第九课_shader_tranistion" loading="lazy"></p>
+<h2 id>怪物进入镜头视野后才会行动</h2>
+<p>另外这里处理了一个问题，就是原先怪物的逻辑是一加载到场景中就会开始执行设置好的动作，在Godot里这个功能甚至不用写代码...。这里我们给Enemy加了一个VisibilityEnabler2D节点，文档对这个节点的解释为：<code>Enables certain nodes only when approximately visible.</code>，作用就是怪物进入镜头视野后才会开始执行预先设定的指令，且不会影响其加载。</p>
+<p><img src="https://cdn.1900.live/typora/image-20201227143553379.png" alt="image-20201227143553379" loading="lazy"></p>
+<h2 id>改变关卡</h2>
+<p>到最后一集了，UP这一集基本上就是利用之前所学重新搭建了场景，增加了一个改变关卡的功能。</p>
+<p><img src="https://cdn.1900.live/typora/image-20201227142857988.png" alt="image-20201227142857988" loading="lazy"></p>
+<p>因为Godot的特性，所以这里我们搭建新关卡的时候很简单，只需要把我们之前创建好的怪物，道具什么的实例化到新场景，摆到想要摆放的位置即可，搭建这个新场景前后不过五分钟把...，面向对象万岁。</p>
+<p>做了一个<code>Exit</code>场景，并连接<code>_on_Exit_body_entered</code>信号，这里指定类型用了和<code>hint_range</code>一样的写法，指定类型为File，并且指定了可选择的后缀(想起了以前C#的文件组件。)，这样我们就能在编辑器里设置下一个场景的路径，并调用我们写好的<code>Globals.go_to_world(path)</code>函数跳转场景</p>
+<pre><code class="language-python"># Exit.gd
+extends Area2D
+
+# 外部参数，指定使用文件系统，并设定可选区的文件类型
+export(String, FILE, &quot;*.tscn&quot;) var path
+
+func _on_Exit_body_entered(_player):
+    # 调用转场函数，传入设置好的场景路径
+    Globals.go_to_world(path)
+# ...
+    
+    
+# Globals.gd
+# ...
+func go_to_world(path):
+    # 死亡的时候让动画倒叙播放
+    animation_player.play_backwards(&quot;fadein&quot;)
+    # 等待动画播放完毕
+    yield(animation_player, &quot;animation_finished&quot;)
+    # 跳转场景
+    get_tree().change_scene(path)
+    # 动画正序播放
+    animation_player.play(&quot;fadein&quot;)
+# ...
+</code></pre>
+<h2 id>效果如下</h2>
+<p>好了，UP主上传的视频已经全部看完了，准备开始自己设计一些关卡，并制作机关功能。</p>
+<p><img src="https://cdn.1900.live/typora/%E7%AC%AC%E4%B9%9D%E8%AF%BE_sence_change.gif" alt="第九课_sence_change" loading="lazy"></p>
+<!--kg-card-end: markdown--></article></div><div class="footer"><div><p>
+          Built with
+          <a target="_blank" href="//gridsome.org" class="link">Gridsome</a>
+          &amp; Made with ❤️ by
+          <a target="_blank" href="//alex.design" class="link">Alex Brown</a></p></div><div class="footer-links"><a target="_blank" href="/sitemap.xml">Sitemap</a><a target="_blank" href="/feed.xml">RSS Feed</a></div></div></div></main>
+    <script>window.__INITIAL_STATE__={"data":{"metadata":{"siteName":"只是玩玩 | JUST FUN","siteDescription":"\u002Fgridsome-blog"},"post":{"id":"63158312cf533d1c2cf29b3f","title":"Godot游戏引擎学习 第九课","content":"\u003C!--kg-card-begin: markdown--\u003E\u003Ch2 id=\"shader\"\u003E再次学习Shader\u003C\u002Fh2\u003E\n\u003Cp\u003E这里先吐槽一句，以前玩全没接触过，在没有概念的情况下看待未知的事物的感觉真不好。跟着UP主把代码写出来效果实现后却对这些参数函数的意义完全不懂。\u003C\u002Fp\u003E\n\u003Cp\u003E所以我索性上Godot的官方文档里重新认真大概了解一下Shader是什么东西，以下写的东西都是在Godot里的情况\u003C\u002Fp\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E着色器是在图形处理器上运行的独特程序。它们用于指定如何获取网格数据(顶点位置、颜色、法线等等)然后把它们绘制到屏幕上。着色器并不像普通程序那样处理信息，因为它们经过了优化，可以在图形处理器上运行。其结果是，着色器在运行后不会保留数据；它们把最后一种颜色输出到屏幕上，然后继续。因此，无法访问着色器上次运行时的颜色输出。\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E首先是Shader的类型，一个shader着色器开头必须定义它的类型，官方给了三种，分别是：\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003ESpatial：用于3d渲染\u003C\u002Fli\u003E\n\u003Cli\u003Ecanvas_item：用于2D渲染\u003C\u002Fli\u003E\n\u003Cli\u003Eparticles：用于粒子系统\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E定义完Shader类型后要写一个主入口函数，也分为三种\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003Evertex()：运行在所有网格的定点上，并设置他们的位置及部分其他每个顶点的变量。\u003C\u002Fli\u003E\n\u003Cli\u003Efragment()：官方没说，应该是为每个像素运行的。\u003C\u002Fli\u003E\n\u003Cli\u003Elight()：为每个像素和美术光照。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cblockquote\u003E\n\u003Cp\u003E吐槽一下，Godot的官方文档翻译好烂啊....，哎，不过有总比没有好，毕竟都是网友翻译的。（这里不是否定大家的工作，相反还要感谢。）\u003C\u002Fp\u003E\n\u003C\u002Fblockquote\u003E\n\u003Cp\u003E这样就大概完成函数主体了，接下来我们就可以在主题中对像素进行操作了。\u003C\u002Fp\u003E\n\u003Cp\u003E我目前理解的一些东西就是。\u003C\u002Fp\u003E\n\u003Col\u003E\n\u003Cli\u003E可以通过vec4变量来储存图片的rpga通道，当然也有三位变量储存rgb颜色值。\u003C\u002Fli\u003E\n\u003Cli\u003E可以通过texture函数获取外部贴图\u003C\u002Fli\u003E\n\u003Cli\u003EUV代表一个像素再网格中的坐标，最小是0，最大是1，分为r,x,g,y，这里r和g我不知道是什么意思，但是x应该是水平坐标，y为垂直坐标。\u003C\u002Fli\u003E\n\u003Cli\u003ECOLOR代表当前像素的原本颜色，你可以给与一个vec4变量来改变颜色。\u003C\u002Fli\u003E\n\u003C\u002Fol\u003E\n\u003Cp\u003E目前的理解大概就是这样，当然只是最基础的部分。Shader肯定没这么简单，但是我现在也不需要了解的非常深刻，但是要有一些基础原理的理解有利于以后的学习。\u003C\u002Fp\u003E\n\u003Ch2 id=\"godotshader\"\u003EGodot里利用shader完成花里胡哨转场\u003C\u002Fh2\u003E\n\u003Cp\u003E首先为Globals的\u003Ccode\u003EColorRect\u003C\u002Fcode\u003E添加一个\u003Ccode\u003EShaderMaterial\u003C\u002Fcode\u003E，并添加如下代码如下：\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode class=\"language-java\"\u003Eshader_type canvas_item; \n\n\u002F\u002F 定义默认值\n\u002F\u002F 渐变边界\nuniform float cutoff: hint_range(0.0, 1.0) = 0.5;\n\u002F\u002F 模糊级别\nuniform float feather:hint_range(0.0, 1.0) = 0.1;\n\u002F\u002F 2D纹理\nuniform sampler2D mask;\n\n\u002F\u002F 片段函数，可以对图片中的每个像素进行操作\nvoid fragment()\n{\n\t\u002F\u002F 顶一个思维变量，代表像素的四个通道的颜色，分别是Red Green Blue Alpha\n\tvec4 col = vec4(0.0, 0.0, 0.0, 1.0);\n\t\u002F\u002F 读取外部纹理\n\tvec4 v = texture(mask, UV);\n\t\n\u002F\u002F\t\u002F\u002F如果uv的横向还没到我们的效果区域则全部设置为透明\n\u002F\u002F\tif(UV.x &lt; cutoff - feather){\n\u002F\u002F\t\tcol.a = 0.0\n\u002F\u002F\t\u002F\u002F如果横向坐标到达效果区的最右边\n\u002F\u002F\t}else if(UV.x &lt; cutoff){\n\u002F\u002F\t\t\u002F\u002F 则讲透明度设置成边界减羽化值\n\u002F\u002F\t\tcol.a = (UV.x - (cutoff - feather))\n\u002F\u002F\t}\n\t\n\t\u002F\u002F 这个函数不太懂，看了下官方手册是一个插值函数，原理是一个名为：埃尔米特插值法(Hermite interpolation)的东西，我完全看不懂。\n\t\u002F\u002F up的解释是如果最后一个参数小于第一个参数则返回0，大于第二个参数则返回1，介于第一个参数和第二个参数之间的话返回一个过渡值\n\t\u002F\u002F 第三个为啥用纹理像素中的r通道，我自己测试了一下，其他通道也是可以，我觉得只是为了界定像素在哪个位置而已。\n\tcol.a = smoothstep(cutoff - feather, cutoff, v.g * (1.0 -feather));\n\t\n\t\u002F\u002F 应用颜色\n\tCOLOR = col;\n}\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Cp\u003E然后修改fadein动画，动态改变代码中设置的\u003Ccode\u003Ecutoff\u003C\u002Fcode\u003E和\u003Ccode\u003Efeather\u003C\u002Fcode\u003E值。\u003C\u002Fp\u003E\n\u003Cp\u003E效果如下：\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002F%E7%AC%AC%E4%B9%9D%E8%AF%BE_shader_tranistion.gif\" alt=\"第九课_shader_tranistion\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch2 id\u003E怪物进入镜头视野后才会行动\u003C\u002Fh2\u003E\n\u003Cp\u003E另外这里处理了一个问题，就是原先怪物的逻辑是一加载到场景中就会开始执行设置好的动作，在Godot里这个功能甚至不用写代码...。这里我们给Enemy加了一个VisibilityEnabler2D节点，文档对这个节点的解释为：\u003Ccode\u003EEnables certain nodes only when approximately visible.\u003C\u002Fcode\u003E，作用就是怪物进入镜头视野后才会开始执行预先设定的指令，且不会影响其加载。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002Fimage-20201227143553379.png\" alt=\"image-20201227143553379\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Ch2 id\u003E改变关卡\u003C\u002Fh2\u003E\n\u003Cp\u003E到最后一集了，UP这一集基本上就是利用之前所学重新搭建了场景，增加了一个改变关卡的功能。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002Fimage-20201227142857988.png\" alt=\"image-20201227142857988\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003Cp\u003E因为Godot的特性，所以这里我们搭建新关卡的时候很简单，只需要把我们之前创建好的怪物，道具什么的实例化到新场景，摆到想要摆放的位置即可，搭建这个新场景前后不过五分钟把...，面向对象万岁。\u003C\u002Fp\u003E\n\u003Cp\u003E做了一个\u003Ccode\u003EExit\u003C\u002Fcode\u003E场景，并连接\u003Ccode\u003E_on_Exit_body_entered\u003C\u002Fcode\u003E信号，这里指定类型用了和\u003Ccode\u003Ehint_range\u003C\u002Fcode\u003E一样的写法，指定类型为File，并且指定了可选择的后缀(想起了以前C#的文件组件。)，这样我们就能在编辑器里设置下一个场景的路径，并调用我们写好的\u003Ccode\u003EGlobals.go_to_world(path)\u003C\u002Fcode\u003E函数跳转场景\u003C\u002Fp\u003E\n\u003Cpre\u003E\u003Ccode class=\"language-python\"\u003E# Exit.gd\nextends Area2D\n\n# 外部参数，指定使用文件系统，并设定可选区的文件类型\nexport(String, FILE, &quot;*.tscn&quot;) var path\n\nfunc _on_Exit_body_entered(_player):\n    # 调用转场函数，传入设置好的场景路径\n    Globals.go_to_world(path)\n# ...\n    \n    \n# Globals.gd\n# ...\nfunc go_to_world(path):\n    # 死亡的时候让动画倒叙播放\n    animation_player.play_backwards(&quot;fadein&quot;)\n    # 等待动画播放完毕\n    yield(animation_player, &quot;animation_finished&quot;)\n    # 跳转场景\n    get_tree().change_scene(path)\n    # 动画正序播放\n    animation_player.play(&quot;fadein&quot;)\n# ...\n\u003C\u002Fcode\u003E\u003C\u002Fpre\u003E\n\u003Ch2 id\u003E效果如下\u003C\u002Fh2\u003E\n\u003Cp\u003E好了，UP主上传的视频已经全部看完了，准备开始自己设计一些关卡，并制作机关功能。\u003C\u002Fp\u003E\n\u003Cp\u003E\u003Cimg src=\"https:\u002F\u002Fcdn.1900.live\u002Ftypora\u002F%E7%AC%AC%E4%B9%9D%E8%AF%BE_sence_change.gif\" alt=\"第九课_sence_change\" loading=\"lazy\"\u003E\u003C\u002Fp\u003E\n\u003C!--kg-card-end: markdown--\u003E","date":"27 December 2020","path":"godot_game_engine_to_learn_lesson_nine"}},"context":{}};(function(){var s;(s=document.currentScript||document.scripts[document.scripts.length-1]).parentNode.removeChild(s);}());</script><script src="/assets/js/app.b62e6b44.js" defer></script><script src="/assets/js/page--src--templates--ghost-post-vue.9ef213ea.js" defer></script>
+  </body>
+</html>
